@@ -46,7 +46,7 @@ namespace Algorithms_Knowledge_Base.Arrays
         {
             var sol = new TwoSumSolution();
             var result = sol.TwoSum(new int[] { 2, 7, 11, 15 }, 9);
-            Assert.AreEqual(new int[0, 1], result);
+            Assert.AreEqual(new int[] {0,1}, result);
         }
     }
 }
