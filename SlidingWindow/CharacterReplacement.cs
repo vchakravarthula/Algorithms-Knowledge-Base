@@ -35,12 +35,42 @@ namespace Algorithms_Knowledge_Base.SlidingWindow
 
                 maxLength = Math.Max(maxLength, right - left + 1);
             }
-
             
-
             return maxLength;
-
         }
 
+        /* * PROBLEM: LeetCode #2024 (Maximize the Confusion of an Exam)
+     * TIME COMPLEXITY: O(n) - Single pass through the string.
+     * SPACE COMPLEXITY: O(1) - Fixed size array for 'T' and 'F'.
+     * * STRATEGY: 
+     * This is a sliding window problem identical to the 'Character Replacement' pattern.
+     * We don't actually swap T/F; we calculate the "cost" to make a window uniform:
+     * Cost = (Window Size - Count of most frequent character).
+     * As long as Cost <= k, the window is valid.
+     */
+    public int MaxConsecutiveAnswers(string answerKey, int k)
+    {
+        int left = 0, maxFreq = 0, maxLength = 0;
+        int[] counts = new int[26]; // Using 26 to safely map 'T' and 'F' using - 'A'
+
+        for (int right = 0; right < answerKey.Length; right++)
+        {
+            // Expand: update count and track the most frequent character in current window
+            maxFreq = Math.Max(maxFreq, ++counts[answerKey[right] - 'A']);
+
+            // Shrink: if we need more than 'k' replacements, move the left pointer
+            while ((right - left + 1) - maxFreq > k)
+            {
+                counts[answerKey[left] - 'A']--;
+                left++;
+                // Note: maxFreq doesn't need to be decremented; maxLength only 
+                // increases when we find a NEW higher maxFreq.
+            }
+
+            maxLength = Math.Max(maxLength, right - left + 1);
+        }
+
+        return maxLength;
+    }
     }
 }
