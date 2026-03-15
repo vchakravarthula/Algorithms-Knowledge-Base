@@ -28,6 +28,6 @@ public class MinimumSizeSubarraySum {
       }
 
       // Return 0 if no such subarray was found
-      return minLength = int.MaxValue ? 0 : minLength;
+      return minLength == int.MaxValue ? 0 : minLength;
     }
 }
