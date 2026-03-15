@@ -40,5 +40,38 @@ namespace Algorithms_Knowledge_Base.SlidingWindow
             }
             return res;
         }
+
+        public int NumberOfSubstrings(string s)
+        {
+            // This method counts the number of substrings that contain all three characters 'a', 'b', and 'c'.
+            // We use a sliding window approach with two pointers (left and right) to track the current substring.
+            // A dictionary is used to count the occurrences of 'a', 'b', and 'c' in the current window.
+            // We expand the right pointer to include new characters until we have at least one of each character.
+            // Once we have a valid window, we can count all substrings that start from the left pointer and end at or after the right pointer.
+            // We then move the left pointer to shrink the window and continue counting until we no longer have all three characters.
+            int res = 0, left = 0, right = 0;
+
+            var map = new Dictionary<char, int>();
+
+            while (right < s.Length)
+            {
+                if (!map.ContainsKey(s[right]))
+                    map[s[right]] = 0;
+
+                map[s[right]]++;
+
+                while(map.Count == 3)
+                {
+                    res += s.Length - right; // Count all substrings starting from left to the end of the string
+                    map[s[left]]--;
+                    if (map[s[left]] == 0)
+                        map.Remove(s[left]);
+                    left++;
+                }
+                right++;
+            }
+            return res;
+        }
+    }
     }
 }
